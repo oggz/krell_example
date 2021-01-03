@@ -46,6 +46,12 @@
                                     {:title "Dinner" :list ["steak" "potatoes" "string beans"]}]
                             :testlist ["steak" "potatoes" "string beans"]}))
 
+(defn get-btc-price []
+  (-> (js/fetch "https://api.coinbase.com/v2/prices/spot?currency=USD")
+      (.then #(.json %))
+      (.then #(swap! app-state assoc :answer (.-amount (.-data %))))
+      (.catch #(js/console.log %))))
+
 (defn input []
   (fn []
     (let [answer (:answer @app-state)]
@@ -63,7 +69,7 @@
    [rn/view {:style {:height 30}}]
    
    [rn/text {:style {:fontSize 36 :color "blue"}
-             :on-press #(swap! app-state assoc-in [:answer] "Surprise!")}
+             :on-press #(get-btc-price)}
     "Hello krell world!\n"]
    
    [input]
@@ -73,7 +79,7 @@
    ;;  [rn/image {:source splash-img :style {:width 150 :height 150}}]]
 
    [rn/text {:style (:body styles)}
-    "\nShould this become a shopping list app?"]
+    "\nShould this become a shopping list or a machining calculator app?"]
 
    [rn/view {:style (:buttonContainer styles)}
     [rn/view {:style (:mybutton styles)}
