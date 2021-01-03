@@ -63,7 +63,7 @@
    [rn/view {:style {:height 30}}]
    
    [rn/text {:style {:fontSize 36 :color "blue"}
-                :on-press #(swap! app-state update-in [:answer] inc)}
+             :on-press #(swap! app-state assoc-in [:answer] "Surprise!")}
     "Hello krell world!\n"]
    
    [input]
